@@ -1,0 +1,213 @@
+{%extends "home.html"%}
+{%load static%}
+
+{%block "content"%}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+.body{
+  min-width: 100%;
+}
+*{
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  margin:0; padding:0;  
+  box-sizing: border-box;
+  outline: none; border:none;
+  text-transform: capitalize;
+  transition: all .2s linear;
+}
+.row{
+  margin-left: 250px;
+  border-radius: 5px;
+  width: 600px;
+  background: linear-gradient(90deg,  hsl(0, 59%, 73%) 50%, hsl(0, 41%, 64%) 40.1%);
+
+}
+.col-lg-6{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-left:50px;
+  
+  /*min-height: 100vh;*/
+  
+}
+
+.container .col {
+  padding:20px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+.container .col form .row{
+  display: flex;
+  flex-wrap: wrap;
+  gap:15px;
+}
+
+.container .col form .row .col{
+  flex:1 1 250px;
+}
+
+.title{
+  font-size: 20px;
+  color:#333;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.container .col form .row .col .inputBox{
+  margin:15px 0;
+
+}
+
+.container .col form .row .col .inputBox span{
+  margin-bottom: 10px;
+  display: block;
+}
+
+.container .col form .row .col-lg-6 .inputBox input{
+  width: 100%;
+  border:1px solid #ccc;
+  padding:10px 15px;
+  font-size: 15px;  
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+  border-radius: 50px;
+}
+
+.inputBox input:focus{
+  border:1px solid  hsl(0, 41%, 37%);
+}
+
+.container .col form .row .col .flex{
+  display: flex;
+  gap:15px;
+}
+
+.inputBox{
+  margin-top: 5px;
+  margin-bottom: 25px;
+}
+
+.container .col form .row .col .inputBox img{
+  height: 34px;
+  margin-top: 5px;
+  filter: drop-shadow(0 0 1px #000);
+}
+
+.container .col form .submit-btn{
+  width: 100%;
+  padding:12px;
+  font-size: 17px;
+  background: #27ae60;
+  color:#fff;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.btn{
+  padding: 5px 12px;
+}
+
+input{
+    border: 1px solid  hsl(0, 47%, 59%);
+    border-radius: 3px;
+    padding-left: 5px;
+}
+</style>
+
+<div class="container col">
+    {%if details%}
+      {%for detail in details%}
+      <form method="POST" >
+        {%csrf_token%}
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="title">billing address</h3>
+                <div class="inputBox">
+                    <span>full name :</span>
+                    <input type="text" name="fname"  value="{{detail.fname}}">
+                </div>
+                <div class="inputBox">
+                    <span>email :</span>
+                    <input type="email" style="  text-transform: lowercase;" name="email" value="{{detail.email}}">
+                </div>
+                <div class="inputBox">
+                    <span>address :</span>
+                    <input type="text" name="addr" value="{{detail.addr}}">
+                </div>
+                <div class="inputBox">
+                    <span>city :</span>
+                    <input type="text" name="city" value="{{detail.city}}">
+                </div>
+            </div>
+            <div class="col-lg-6" style="padding-top: 53px;">
+                <div class="flex">
+                    <div class="inputBox">
+                        <span>state :</span>
+                        <input type="text" name="state" value="{{detail.state}}">
+                    </div>
+                    <div class="inputBox">
+                        <span>zip code :</span>
+                        <input type="text" name="zip" value="{{detail.zip}}">
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="inputBox">
+                        <span>Mob. No. :</span>
+                        <input type="number" name="mobile" value="{{detail.mobile}}">
+                    </div>
+              </div>
+            </div></div>
+            <center><button class="btn btn-danger" type="submit" style="margin: 20px;">Update Address</button></center>
+          </form>
+          {%endfor%}
+        {%else%}
+        <form method="POST" >
+          {%csrf_token%}
+        <div class="row">
+          <div class="col-lg-6">
+              <h3 class="title">billing address</h3>
+              <div class="inputBox">
+                  <span>full name :</span>
+                  <input type="text" name="fname" placeholder="First name  Last name">
+              </div>
+              <div class="inputBox">
+                  <span>email :</span>
+                  <input type="email" style="  text-transform: lowercase;" name="email" placeholder="example@example.com">
+              </div>
+              <div class="inputBox">
+                  <span>address :</span>
+                  <input type="text" name="addr" placeholder="House No. - street - locality">
+              </div>
+              <div class="inputBox">
+                  <span>city :</span>
+                  <input type="text" name="city" placeholder="mumbai">
+              </div>
+          </div>
+          <div class="col-lg-6" style="padding-top: 53px;">
+              <div class="flex">
+                  <div class="inputBox">
+                      <span>state :</span>
+                      <input type="text" name="state" placeholder="india">
+                  </div>
+                  <div class="inputBox">
+                      <span>zip code :</span>
+                      <input type="text" name="zip" placeholder="123 456">
+                  </div>
+              </div>
+              <div class="flex">
+                  <div class="inputBox">
+                      <span>Mob. No. :</span>
+                      <input type="number" name="mobile" placeholder="123456789">
+                  </div>
+            </div>
+          </div>
+            <center><button class="btn btn-danger" type="submit" style="margin: 20px;">Save Address</button></center>         
+        </form> 
+        {%endif%}  
+        </div>
+
+{%endblock%}

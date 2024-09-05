@@ -1,0 +1,64 @@
+{%extends "home.html"%}
+
+{%block "content"%}
+<style>
+    .blink{animation:blinker 1.8s linear infinite;}
+    @keyframes blinker{50%{opacity:0;}}
+
+    .custom-centered{
+      margin: auto;
+      background-color: hsl(0, 59%, 73%);
+      padding-top: 30px;
+      padding-right: 30px;  
+      padding-left: 50px;
+      padding-bottom: 30px;
+      width: 500px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .flex{
+        background-color: rgb(255, 255, 255);
+        max-width:max-content;
+        padding: 20px 20px;
+        border-radius: 50px;
+        font-family: cursive;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    }
+    body{
+        background-color: hsl(0, 100%, 96%) ;
+    }
+</style>
+
+  <div class="container">    
+    <div class="row">
+    
+      
+      {%for item in items%}
+      
+      <div class="col-sm-4">
+        <div class="panel ">
+          <div class="panel-heading" style="height: 70px;">{{item.product.product_name}}</div>
+          <div class="panel-body" ><img src="{{item.product.image1.url}}" class="img-responsive" style="width:100% ;height:438px" alt="Image"></div>
+          <div class="panel-footer"> 
+            <div>price ₹{{item.product.price}} </div><br>
+            <a href="/viewDetails/{{item.product.id}}"><button class="btn btn-danger">view details</button></a>   
+            <form style="display: inline-flex" method="POST" action="/addtocart">
+              {%csrf_token%}             
+                  <!--<div class="content" id="{{product.id}}">-->
+                    <input type="hidden" name="cid" value="{{item.product.id}}"/>
+                    <span><button class="btn btn-danger" style="margin-left: 10px;" type="submit">Add To Cart</button></span>                                            
+            </form>
+            <form method="POST" style="display: inline-flex">
+              {%csrf_token%}
+              <input  type="hidden" name="product_id" value="{{item.id}}"/>
+              <span><button class="btn btn-danger" name="action" value="remove" style="margin-left: 10px;" type="submit">remove</button></span>                   
+            </form>
+          </div>
+          </div>      
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+  </div><br>
+  
+{%endblock%}

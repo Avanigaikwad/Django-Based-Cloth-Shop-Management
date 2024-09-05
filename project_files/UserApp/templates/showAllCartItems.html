@@ -1,0 +1,143 @@
+{%extends "home.html"%}
+
+{%block "content"%}
+<style>
+    .button{
+        border-radius: 50%;
+    }
+    td{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    tr{
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    }
+    .total{
+        display: flex;
+        justify-content: center;
+        padding-bottom: 20px;
+
+    }
+    button{
+        border-radius: 10%;
+    }
+    strong{
+        font-size: 18px;
+    }
+    .row{
+        margin-top: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    }    
+    .col-lg-3 {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 20px;  
+        padding-left: 50px;     
+    }
+    @keyframes glowing{
+        0%{
+            background-color: #a80505;
+            box-shadow: 0 0 5px #a80505;
+        }
+        50%{
+            background-color: #f14363;
+            box-shadow: 0 0 20px #f14363;           
+        }
+        100%{
+            background-color: #ae1e3a;
+            box-shadow: 0 0 5px #ae1e3a;            
+        }}
+        .new{
+            animation: glowing 1300ms infinite;
+        }
+    
+</style>
+
+<script class="tex">
+    function decrement(bid)
+    {
+        var num = parseInt(document.getElementById(bid).value);
+        if (num > 1)
+        {
+            num -= 1;
+        }
+        document.getElementById(bid).value = num
+    }
+    function increment(bid)
+    {
+        var num = parseInt(document.getElementById(bid).value);
+        if (num < 5)
+        {
+            num += 1;
+        }
+        else{
+            alert("You can add only 5 quantities of this product ")
+        }
+        document.getElementById(bid).value = num
+    }
+</script>
+<div class="container">
+<h2>Add To Cart Details</h2>
+{% if messages %}
+    {% for message in messages%}
+    <div class="container-fluid p-0">
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="True">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      </div>
+    {% endfor %}
+{% endif %}
+<div class="col-lg-9" style="padding-top: 20px;">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-1"><strong>Price</strong></div>
+        <div class="col-lg-4" style="display: flex;justify-content: center;"><strong>Sub Total</strong></div>
+    </div></div>
+{%for item in items%}
+<form method="POST">
+    {%csrf_token%}
+    <div class="col-lg-9">
+        <div class="row">
+            <div class="col-lg-2"><img src="{{item.product.image1.url}}" width="100px"></div>
+            <div class="col-lg-5" style="justify-content: left;">{{item.product.product_name}}
+                <input type="hidden" name="product_id" value="{{item.id}}">
+                <div class="col-lg-5" style="padding-top: 20px;"><button class="button btn-info" type="button" onclick="decrement('qntity{{item.product.id}}')">-</button>
+                    <input type="text" style="width: 20px;" id="qntity{{item.product.id}}" name="qntity" value="{{item.quantity}}" readonly/>
+                    <button class="button btn-info" type="button" onclick="increment('qntity{{item.product.id}}')">+</button></div>
+            <div class="col-lg-5" style="padding-top: 20px;"><select class="form-control" style="background-color: #eab4b4;" name="size" value="{{item.size}}" >
+                <option>{{item.size}}</option>
+                <option aria-placeholder="{{item.size}}">XS</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+            </select></div>
+        </div>
+            <div class="col-lg-2">₹ {{item.product.price}} 
+        </div>
+            <div class="col-lg-2" style="display: flex; justify-content: center;">₹ {% widthratio item.quantity 1 item.product.price %}   
+        </div>
+        </div>
+
+        <div class="col-lg-12" style="display: flex; justify-content: end;">
+            <a href="/makePayment" name="action" value="buy">
+                <input type="hidden" name={{request.session.count}} value={{count|add:-1}}><button class="btn btn-danger" style="margin-right: 10px;">Buy Now</button></a>         
+            <button type="submit" name="action" value="update" class="btn btn-danger" style="margin-right: 10px;">Update</button>   
+            <button type="submit" name="action" value="remove" class="btn btn-danger">Remove</button></div>
+    </div>
+</form>
+{%endfor%}
+<hr>
+{%if request.session.count == 0%}
+<div class="total"><button class="btn btn-danger new" style="margin-left: 30px;"><strong>Please add something to cart </strong></button></div>
+{%else%}
+<div class="total"><a href="/makePayment"><button class="btn btn-danger new" style="margin-left: 30px;"><strong>Place Order ({{request.session.count}} items)<br> Total : {{request.session.total}}</strong></button></a></div>
+{%endif%}
+</div>
+{%endblock%}

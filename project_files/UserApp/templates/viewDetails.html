@@ -1,0 +1,186 @@
+{%extends "home.html"%}
+
+{%block "content"%}
+<style>
+    
+    
+    body {
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color:hsl(0, 100%, 96%)
+}
+
+.hedding {
+    font-size: 20px;
+    color: #ab8181;
+}
+footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+      
+    }
+
+.main-section {
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, 5%);
+}
+
+.left-side-product-box img {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.left-side-product-box .sub-img img {
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    width: 83px;
+    height: 100px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+
+}
+
+.right-side-pro-detail span {
+    font-size: 15px;    
+}
+.right-side-pro-detail p {
+    font-size: 25px;
+    color: #a1a1a1;
+}
+.right-side-pro-detail .price-pro {
+    color: #E45641;
+    padding-bottom: 20px;
+    
+}
+.right-side-pro-detail .tag-section {
+    font-size: 18px;
+    color: #5D4C46;
+}
+.pro-box-section .pro-box img {
+    width: 100%;
+    height: 200px;
+}
+@media (min-width:360px) and (max-width:640px) {
+    .pro-box-section .pro-box img {
+        height: auto;
+        
+    }
+}   
+</style>
+<style>
+    .sub-img img:hover{
+    opacity: 1;
+}
+.row .m-0{
+    padding-left: 20px;
+    padding-top: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+}
+.col-lg-12{
+    padding-right: 30px;
+}
+.col-lg-11{
+   padding-left: 200px;
+}
+hr{
+    margin-bottom: 0px;
+}
+.col-lg-6 button{
+    width: 200px;
+    height: 40px;
+}
+</style>
+<script>
+    function clickimg(smallImg){
+        var mainImg = document.getElementById("mainImg")
+        mainImg.src = smallImg.src
+    }
+    //var subImg = document.getElementsByClassName("subImg")
+
+    
+</script>
+<body>
+
+<form method="POST" class="custom-centered" action="/addToCart">
+    {%csrf_token%}
+    <div class="container">
+        <div class="col-lg-10 border p-3 main-section bg-white" >           
+            <div class="row m-0">
+                <div class="col-lg-4 left-side-product-box pb-3">
+                    <img src="{{product.image1.url}}"  width="100%" class="border p-3" id="mainImg">
+                    <center><span class="sub-img">
+                        <img src="{{product.image2.url}}" onclick="clickimg(this)">
+                        <img src="{{product.image1.url}}" onclick="clickimg(this)">
+                        <img src="{{product.image3.url}}" onclick="clickimg(this)">
+                    </span></center>
+                </div>
+                <div class="col-lg-8">
+                    <div class="right-side-pro-detail border p-3 m-0">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                
+                                <p><input type="hidden" name="cid" value="{{product.id}}"/>{{product.product_name}}</p><br>
+                            </div>
+                            <div class="col-lg-12">
+                                <p class="m-0 p-0 price-pro">₹ {{product.price}} <span><strike>₹ {{product.price|add:"+100"}}</strike></span></p>
+                                <hr style="border-top: 2px solid #e5b2b2;">
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-3"><h4>Product Size :</h4></div>
+                                <div class="col-lg-9">
+                                <div class="col-lg-4" style="padding-top: 10px;padding-left: 0px;"><select class="form-control" style="background-color: #eab4b4;" name="size">
+                                        <option>XS</option>
+                                        <option>S</option>
+                                        <option>M</option>
+                                        <option>L</option>
+                                        <option>XL</option>
+                                    </select></div></div>
+                                    <div class="col-lg-12" style="padding-left: 210px;padding-right: 15px;"><hr style="border-top: 2px solid #e5b2b2;"></div>         
+                            </div>
+                            <div class="col-lg-12 pt-2" >                    
+                                <div class="col-lg-3"><h4 >Product Detail :</h4></div>
+                                <div class="col-lg-9" style="padding-top: 9px;padding-left: 0px;"><span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-weight: 400;font-size: 18px;">{{product.description}}</span>
+                                <hr style="border-top: 2px solid #e5b2b2;"></div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="col-lg-3"><h4>category :</h4></div>
+                            <div class="col-lg-9" style="padding-top: 9px;padding-left: 0px;"><span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-weight: 400;font-size: 18px;">{{product.category.category_name}}</span></div>
+                            <div class="col-lg-12" style="padding-left: 210px;padding-right: 15px;"><hr style="border-top: 2px solid #e5b2b2;"></div>         
+                            </div>
+                            <div class="col-lg-12">
+                            <div class="col-lg-3">
+                                <h4>Quantity :</h4></div>
+                                
+                                <div class="col-lg-9">
+                                <div class="col-lg-4" style="padding-top: 10px;padding-left: 0px;"><select class="form-control" style="background-color: #eab4b4;" name="qntity">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select></div></div>
+                                <div class="col-lg-12" style="padding-left: 210px;padding-right: 15px;"><hr style="border-top: 2px solid #e5b2b2;"></div>         
+                            </div>
+                            
+                            <div class="col-lg-12 mt-3">
+                                {%if product.quant == 0 %}
+                                <h5>out of stock</h5>
+                                {%else%}
+                                <div class="row" style="padding-bottom: 50px;">
+                                    <div class="col-lg-6 pb-2"><br>
+                                        <button type="submit" class="btn btn-danger"><span style="font-size: 18px;">Add To Cart</span></button>
+                                    </div>
+                                {%endif%}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+    
+</form>
+</body>
+{%endblock%}

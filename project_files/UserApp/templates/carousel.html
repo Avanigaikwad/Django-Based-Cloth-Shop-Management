@@ -1,0 +1,48 @@
+{% load static %}
+
+  <style>
+    .carousel-inner{
+      margin-bottom: 20px;
+      box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+      /*border: 2px solid grey;*/
+    }
+    .carousel-inner > .item > a> img{
+      width:100%;
+      margin: auto;
+      height: 350px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+  <div id="carousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel" data-slide-to="1"></li>
+      <li data-target="#carousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        
+        <a href="/showProducts/5" method="POST"><img class="d-block w-100" src="/static/images/carousel14.jpg" alt="First slide"></a>
+        
+      </div>
+      <div class="item">
+        <a href="/showProducts/6" method="POST"><img class="d-block w-100" src="/static/images/carousel15.jpg" alt="Second slide" ></a>
+      </div>
+      <div class="item">
+        <a><img class="d-block w-100" src="/static/images/carousel7.jpg" alt="Third slide"></a>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      
+    </a>
+    <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      
+    </a>
+  </div>
+</div>
+</body>
+</html>

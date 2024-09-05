@@ -1,0 +1,42 @@
+{%extends "home.html"%}
+
+{%block "content"%}
+<style>
+    .blink{animation:blinker 1.8s linear infinite;}
+    @keyframes blinker{50%{opacity:0;}}
+
+    .abc{
+      margin: auto;
+      background-color: hsl(0, 59%, 73%);
+      padding-top: 30px;
+      padding-right: 30px;  
+      padding-left: 50px;
+      padding-bottom: 30px;
+      width: 500px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .flex{
+        background-color: rgb(255, 255, 255);
+        max-width:max-content;
+        padding: 20px 20px;
+        border-radius: 50px;
+        font-family: cursive;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    }
+    body{
+        background-color: hsl(0, 100%, 96%) ;
+    }
+</style>
+
+<center><h1 class="flex">Order Summary</h1>
+<h3 style="font-style: italic;font-family:serif;-webkit-text-fill-color: crimson;" class="blink">{{message}}</h3></center>
+<div class="abc">
+    <label for="firstname">Products Ordered</label>
+    {%for order in orders%}
+    <div class="form-group">
+        <label class="flex">{{order.details}}  <br> ₹ {{order.amount}}</label>
+    {%endfor%}
+</div>
+</div>
+{%endblock%}
